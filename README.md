@@ -46,3 +46,34 @@ docker-compose down -v とするとvolumeも削除される
 
 docker-composeでビルドする時にimageを省略することもできる
 docker-compose down --rmi local とすると、down時にimageを消す
+
+## Selection 7: Swarm Intro and Creating a 3-Node Swarm Cluster
+http://docs.docker.jp/engine/swarm/key-concepts.html
+
+ノード（node） とは、Swarm 内に参加する Docker Engine インスタンスです。
+
+サービス（service） とは、アプリケーションを作り上げるための様々なタスクを、どのように実行するかという定義です。たとえば、Swarm 内で Redis イメージをデプロイするサービスを作成します。
+サービスの作成時に指定するのは、どのコンテナ・イメージを使い、コンテナ内でどのようなコマンドを実行するかです。
+
+タスク（task） とは Docker コンテナを運び、コンテナ内でコマンドを実行します。これは Swarm における最小スケジューリング単位です。マネージャ・ノードはワーカ・ノードに対してタスクを割り当てます。割り当てる数はサービスのスケールで設定されたレプリカ数に応じます。
+
+マネージャーノードはワーカーも兼ねる
+
+docker service ls ... 立ち上がってるサービスがリストで出る
+docekr service ps \<id> ... そのサービスの実行状況(タスク)がわかる。どのノードにいるかもわかる
+
+ノード ... デプロイ対象になる場所、それを管理するもの（マネージャーノード）
+サービス ... やること
+タスク ...実際にやってるもの
+
+サービスを削除しても、立ち上げたコンテナが自動で止まるわけじゃない
+
+docker-machine
+env設定してdockerコマンドのアクセス先を変える
+eval "$(docker-machine env default)"
+
+戻すときは再起動するか新しいシェル開くか以下
+eval $(docker-machine env -u)
+
+ターミナルタイプがないって言われたら
+https://www.geek.sc/archives/2408
