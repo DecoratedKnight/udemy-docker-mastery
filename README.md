@@ -35,3 +35,14 @@ docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html ng
 docker container run -d --name nginx -p 80:80 --mount type=bind,source=$(pwd),target=/usr/share/nginx/html nginx
 
 デタッチしてるコンテナのログを見るときは docker container logs -f 
+
+## Selction 6: Making It Easier with Docker Compose: The Multi-Container Tool
+volumeをread-onlyにすることもできる
+docker-composeで立ち上げるとネットワークが勝手に作られる
+
+assingment1
+namedvolume にしないと、毎回新しいvolumeができちゃって引き継がれない
+docker-compose down -v とするとvolumeも削除される
+
+docker-composeでビルドする時にimageを省略することもできる
+docker-compose down --rmi local とすると、down時にimageを消す

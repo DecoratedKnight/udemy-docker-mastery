@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  drupal:
+    image: drupal:8.8.2
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/themes
+      - drupal-themes:/var/www/html/sites
+  db:
+    image: postgres:12.1
+    environment:
+      POSTGRES_PASSWORD: passwd
+    volumes:
+      - type: volume
+        source: psql_data_compose
+        target: /var/lib/postgresql/data
+
+volumes:
+  psql_data_compose:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
