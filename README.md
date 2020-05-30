@@ -15,3 +15,23 @@ https://knowledge.sakura.ad.jp/23899/
 レベルを省略するとlatestが対象になるっぽい
 
 変化がよくある部分はできるだけDockerfileの後ろの方に書く（キャッシュを利用したいので）
+
+## Section 5: Container Lifetime & Persistent Data: Volumes, Volumes, Volumes
+volume作ったときのパスは直接アクセスできない
+Docker for Macは実際にはLinux VMを立ち上げていて、その中のパスだから
+
+コンテナ側のマウントさせることができるパスはVOLUMEとしてDockerfileに記載しないとダメなのかな？
+→ 違った、マウントはできる
+→ VOLUMEに書いたパスは勝手に名前なしのボリュームでマウントされる、名前を付ければそのNamed Volumeがつく
+
+マウント時のオプションは -vと--mountがあるが、公式は--mount推しっぽい
+data volumeの時 -vの左側にボリューム名
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v mysql_data:/var/lib/mysql mysql
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes --mount source=mysql_data,target=/var/lib/mysql mysql
+
+bind mountの時 -vなら左側をパスにする
+ホスト側にあるファイルと同期するので、開発の時に使う
+docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+docker container run -d --name nginx -p 80:80 --mount type=bind,source=$(pwd),target=/usr/share/nginx/html nginx
+
+デタッチしてるコンテナのログを見るときは docker container logs -f 
