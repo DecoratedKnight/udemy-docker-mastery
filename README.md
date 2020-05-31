@@ -92,3 +92,7 @@ docker stack ps \<voteapp> ... taskの一覧
 
 stack ... deployが有効で、buildが無効
 compose ... buildが有効で、deployが無効
+
+secretのマウント先は /run/secrets/\<secret_name>
+
+swarmでもホスト名解決はdocker-composeに書いた名前でできる
