@@ -96,3 +96,16 @@ compose ... buildが有効で、deployが無効
 secretのマウント先は /run/secrets/\<secret_name>
 
 swarmでもホスト名解決はdocker-composeに書いた名前でできる
+
+## Section 9: Swarm App Lifecycle
+composeでもsecret使えるがfile-basedのみ（externalはない）
+composeファイルは起動時に上書きとマージができる
+本番用の設定は docker-compose configの結果をファイルにリダイレクトして使う
+ただしうまくマージされない項目もあるっぽい
+
+ヘルスチェックもできる
+
+## Section 10: Container Registries: Image Storage and Distribution
+プライベートのレジストリにプッシュする用のタグは、 127.0.0.1:5000/\<name> のようにすると、
+push時にそっちにプッシュしてくれるらしい
+httpsが必要だが、localhostならなくてもOKっぽい
