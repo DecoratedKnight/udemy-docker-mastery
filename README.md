@@ -69,11 +69,26 @@ docekr service ps \<id> ... そのサービスの実行状況(タスク)がわ�
 サービスを削除しても、立ち上げたコンテナが自動で止まるわけじゃない
 
 docker-machine
-env設定してdockerコマンドのアクセス先を変える
+env設定してdockerコマンドのアクセス先を変えるとサーバーにログインしなくても作業できる
 eval "$(docker-machine env default)"
 
 戻すときは再起動するか新しいシェル開くか以下
 eval $(docker-machine env -u)
 
 ターミナルタイプがないって言われたら
+export TERM=xterm
 https://www.geek.sc/archives/2408
+
+## Section 8: Swarm Basic Features and How to Use Them In Your Workflow
+overlay network ... 複数のホストに跨がっても1つのネットワークとみなす
+
+サービスは複数のネットワークにくっつけることができる
+
+ルーティングメッシュ
+https://www.itmedia.co.jp/enterprise/articles/1610/19/news009_3.html
+
+docker stack service \<stackname> ... そのstackで立ち上がってるserviceの全体像
+docker stack ps \<voteapp> ... taskの一覧
+
+stack ... deployが有効で、buildが無効
+compose ... buildが有効で、deployが無効
