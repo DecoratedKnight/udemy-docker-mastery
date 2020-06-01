@@ -109,3 +109,46 @@ composeファイルは起動時に上書きとマージができる
 プライベートのレジストリにプッシュする用のタグは、 127.0.0.1:5000/\<name> のようにすると、
 push時にそっちにプッシュしてくれるらしい
 httpsが必要だが、localhostならなくてもOKっぽい
+
+## Section 13: Kubernetes Install And Your First Pods
+用語
+Pods ... 一つのノードの中で立ち上がってる（1~複数の）コンテナ
+デプロイの単位。コンテナは常にPodsの中
+Controller ... podsを作ったりアップデートしたりする。いろんな種類のControllerがある
+Service ... podに繋がるネットワークとのエンドポイント
+Namespace ... クラスタ内でのグループみたいな
+
+kubectl run ... docker run
+kubectl create ... docker create (for swarm)
+kubectl apply ... docker stack deploy にそれぞれ近い
+
+k8s 1.18からkubectl run の意味合いが変わって
+一つのpodを作るだけになる
+
+1.8以前
+kubectl run nginx --image nginx 
+... created a Deployment named nginx (which creates a ReplicaSet, which creates a Pod)
+
+1.8以前では、runするとpods, replicaset, deploymentが作成される
+レプリカセットとデプロイメントとは
+https://www.designet.co.jp/ossinfo/kubernetes/replicaset/
+
+1.8以降
+kubectl run nginx --image nginx 
+... creates a Pod named nginx in 1.18+
+kubectl create deployment nginx --image nginx 
+... creates a Deployment in 1.18
+
+kubectl get all ... いろいろ表示してくれる
+
+https://kubernetes.io/docs/reference/kubectl/overview/#resource-types
+コマンドでTYPE指定が必要なときは上記の表を参考に
+https://kubernetes.io/docs/reference/kubectl/overview/#syntax
+コマンドの自由度がとても高い
+
+Container logs 
+kubectl logs deployments/my-apache --follow --tail 1
+いろんな情報
+kubectl describe pods/my-apache-5d589d69c7-fz227
+ウオッチ
+kubectl get pods -w
