@@ -130,8 +130,12 @@ kubectl run nginx --image nginx
 ... created a Deployment named nginx (which creates a ReplicaSet, which creates a Pod)
 
 1.8以前では、runするとpods, replicaset, deploymentが作成される
-レプリカセットとデプロイメントとは
+関係性は Deployment → ReplicaSet → Pod
+ReplicaSet ... Podのレプリカの数を管理する
+Deployment ... ReplicaSetを管理する
 https://www.designet.co.jp/ossinfo/kubernetes/replicaset/
+
+
 
 1.8以降
 kubectl run nginx --image nginx 
