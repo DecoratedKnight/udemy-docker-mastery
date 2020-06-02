@@ -156,3 +156,24 @@ kubectl logs deployments/my-apache --follow --tail 1
 kubectl describe pods/my-apache-5d589d69c7-fz227
 ウオッチ
 kubectl get pods -w
+
+## Section 14: Exposing Kubernetes Ports
+Service ... podが通信するためのもの
+
+種類
+ClusterIP
+・内側のIP、クラスター（ノードとポッド）間のみ
+・いつでも使える
+・ex) kubectl expose deployment/httpenv --port 8888
+NodePort
+・それぞれのノードにくっつく
+・Nodeに届けば誰でも接続できる
+・いつでも使える
+・ex) kubectl expose deployment/httpenv --port 8888 --name httpenv-np --type NodePort
+これで kubectl get service して 8888:32200 みたいにポートがなる。左側がコンテナ（デプロイ）側のポートで、右がこっち側のポート
+curl localhost:32200 で接続できる
+
+LoadBalancer
+・インフラがLB提供してる時だけ使える
+ExternalName
+・k8sの外側とかとなんかする時
